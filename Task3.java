@@ -2,7 +2,8 @@ import java.util.Stack;
 
 public class Task3 {
 	public static void main(String[] args) {
-		String input ="}()()(][)}";
+		
+		String input ="{()}[[{}]]"; 
 		char[] inputArray = input.toCharArray();
 		boolean answer = search(inputArray);
 		if(answer) {
@@ -11,22 +12,21 @@ public class Task3 {
 			System.out.println("Error");
 		}		
 	}
-	public static Stack<Character> stack = new Stack<>();
-	public static boolean search (char[] array) {
+	private static Stack<Character> stack = new Stack<>();
+	private static boolean search (char[] array) {
 		for(int i=0; i<array.length;i++) {
-			if(proverka(array[i])==false) {
+			if(test(array[i])==false) {
 				return false;
 			}	
 		}
 		return true;
 	}
-	public static boolean proverka (char simbol) {
-			if (simbol=='(' || simbol=='[' || simbol=='{') {
-				stack.push(simbol);
+	private static boolean test (char symbol) {
+			if (symbol=='(' || symbol=='[' || symbol=='{') {
+				stack.push(symbol);
 				return true;
 			}
-			
-			if (simbol==')') {
+			if (symbol==')') {
 				if (stack.empty()) {
 					return false;
 				}
@@ -35,7 +35,7 @@ public class Task3 {
 					return true;
 				}
 			}
-			if (simbol==']') {
+			if (symbol==']') {
 				if (stack.empty()) {
 					return false;
 				}
@@ -44,7 +44,7 @@ public class Task3 {
 					return true;
 				}
 			}
-			if (simbol=='}') {
+			if (symbol=='}') {
 				if (stack.empty()) {
 					return false;
 				}
