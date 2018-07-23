@@ -1,40 +1,58 @@
+import java.util.Stack;
 
 public class Task3 {
-	
 	public static void main(String[] args) {
-		String input ="(())";
+		String input ="}()()(][)}";
 		char[] inputArray = input.toCharArray();
-		int a = search(0,inputArray);
-		if(a==-1) {
-			System.out.println("error");
+		boolean answer = search(inputArray);
+		if(answer) {
+			System.out.println("Ok");
 		} else {
-			System.out.println("OK");
+			System.out.println("Error");
 		}		
 	}
-	static int result=-1;
-		
-	public static int  search (int number, char [] array) {
-		if(array[array.length-1]=='('|| array[array.length-1]=='{' || array[array.length-1]=='[')  {
-			return -1;
-		}	
-		if(array[number]=='(') {
-			   if (array[number+1]==')') {
-				   return number+1;
-			   } if (array[number+1]==']' || array[number+1]=='}') {
-				   return -1;
-			   } if (array[number+1]=='[' || array[number+1]=='{' || array[number+1]=='(') {
-				   result = search(number+1,array);
-				   if(result == -1) {
-					   return -1;
-				   } 
-				   if(result+1<=array.length-1) {
-				   		if (array[result+1]==')') {
-				   			result = number+1;
-				   			return result;
-				   		}
-				   }
-			   } result = -1; 
-		} 
-		return result;
+	public static Stack<Character> stack = new Stack<>();
+	public static boolean search (char[] array) {
+		for(int i=0; i<array.length;i++) {
+			if(proverka(array[i])==false) {
+				return false;
+			}	
+		}
+		return true;
+	}
+	public static boolean proverka (char simbol) {
+			if (simbol=='(' || simbol=='[' || simbol=='{') {
+				stack.push(simbol);
+				return true;
+			}
+			
+			if (simbol==')') {
+				if (stack.empty()) {
+					return false;
+				}
+				if(stack.peek()=='(') {
+					stack.pop();
+					return true;
+				}
+			}
+			if (simbol==']') {
+				if (stack.empty()) {
+					return false;
+				}
+				if(stack.peek()=='[') {
+					stack.pop();
+					return true;
+				}
+			}
+			if (simbol=='}') {
+				if (stack.empty()) {
+					return false;
+				}
+				if(stack.peek()=='{') {
+					stack.pop();
+					return true;
+				}
+			}
+	return false;
 	}
 }
